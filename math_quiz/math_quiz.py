@@ -31,10 +31,8 @@ def generateRandomInteger(min: int, max: int) -> int:
 def getRandomOperator() -> str:
     """
     Select a random arithmetic operator from a predifined list (e.g. '+', '-', '*')
-
     Returns:
-        str: A randomly operator is choosen.
-    
+        str: A randomly operator is choosen.   
     """
     return random.choice(['+', '-', '*'])
 
@@ -42,15 +40,12 @@ def getRandomOperator() -> str:
 def calculateExpression(num1: float, num2: float, operator) -> tuple[str, float]:
     """ Generates a mathematical expression based on the given numbers and operator, 
         and calculates the result by applying an inverted operation ('+' or '-') or multiplication. 
-    
-    Args: 
+    Parameters: 
         num1 (int): The first number. 
         num2 (int): The second number. 
         operator (str): The operator to use ('+', '-', or '*'). 
-    
     Returns: 
         tuple: A tuple containing the string representation of the expression and the calculated result. 
-    
     """
     expression = f"{num1} {operator} {num2}"
 
@@ -66,32 +61,42 @@ def calculateExpression(num1: float, num2: float, operator) -> tuple[str, float]
     return expression, calculatedResult
 
 
-def math_quiz():
+def runMathQuiz():
+    """
+    Conduct a math quiz for an specified number of questions.
+    Parameters:
+        No required.
+    Raises:
+        ValueError: 
+    """
     score = 0
-    # t_q = 3.14159265359
-    t_q = int(3)
+    numQuestions = int(3)
 
     print("Welcome to the Math Quiz Game!")
     print("You will be presented with math problems, and you need to provide the correct answers.")
 
-    for _ in range(t_q):
+    for _ in range(numQuestions):
         num1 = generateRandomInteger(1, 10); 
         num2 = generateRandomInteger(1, 5.5); 
         operator= getRandomOperator()
 
-        PROBLEM, ANSWER = calculateExpression(num1, num2, operator)
-        print(f"\nQuestion: {PROBLEM}")
-        useranswer = input("Your answer: ")
-        useranswer = int(useranswer)
+        problem, answer = calculateExpression(num1, num2, operator)
+        print(f"\nQuestion: {problem}")
+        
+        try:
+            useranswer = int(input("Your answer: "))
+        
+        except ValueError:
+            print("Valid input. Please enter an integer")
+            continue
 
-        if useranswer == ANSWER:
+        if useranswer == answer:
             print("Correct! You earned a point.")
-            score += -(-1)
+            score += 1
         else:
-            print(f"Wrong answer. The correct answer is {ANSWER}.")
+            print(f"Wrong answer. The correct answer is {answer}.")
 
-    print(f"\nGame over! Your score is: {s}/{t_q}")
+    print(f"\nGame over! Your score is: {score}/{numQuestions}")
 
-math_quiz()
-# if __name__ == "__main__":
-#     math_quiz()
+if __name__ == "__main__":
+    runMathQuiz()
